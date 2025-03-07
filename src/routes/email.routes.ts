@@ -3,7 +3,7 @@ import {
   MonitoringEmailService,
   EventType,
   ImpactLevel,
-} from "../services/email.service";
+} from "../services/email.service.js";
 
 const router = Router();
 const emailService = new MonitoringEmailService();
@@ -131,19 +131,15 @@ router.get("/webhook/email/status", async (req, res) => {
   try {
     const isConnected = await emailService.verifyConnection();
     if (isConnected) {
-      res
-        .status(200)
-        .json({
-          status: "operational",
-          message: "Email service is connected and operational",
-        });
+      res.status(200).json({
+        status: "operational",
+        message: "Email service is connected and operational",
+      });
     } else {
-      res
-        .status(503)
-        .json({
-          status: "unavailable",
-          message: "Email service is not connected",
-        });
+      res.status(503).json({
+        status: "unavailable",
+        message: "Email service is not connected",
+      });
     }
   } catch (error) {
     res
