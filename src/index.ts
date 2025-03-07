@@ -8,11 +8,20 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const verifyAccess = (req, res, next) => {
+  const apiKey = req.headers["x-api-key"];
+  if (apiKey === process.env.API_KEY) {
+    next();
+  } else {
+    res.status(401).json({ error: "Unauthorized" });
+  }
+};
+
 // Middleware
 app.use(express.json());
 
 // Routes
-app.use("/api", emailRouter);
+app.use("/api", verifyAccess, emailRouter);
 
 // Health check endpoint
 app.get("/health", (req, res) => {
