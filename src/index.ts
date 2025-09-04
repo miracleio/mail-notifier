@@ -21,7 +21,8 @@ const verifyAccess = (req, res, next) => {
 app.use(cors());
 
 // Middleware
-app.use(express.json());
+app.use(express.json({ limit: "50mb" })); // for parsing application/json
+app.use(express.urlencoded({ extended: true, limit: "50mb" })); // for parsing application/x-www-form-urlencoded
 
 // Routes
 app.use("/api", verifyAccess, emailRouter);
