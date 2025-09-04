@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import emailRouter from "./routes/email.routes.js";
+import cors from "cors";
 
 // Load environment variables
 dotenv.config();
@@ -16,6 +17,8 @@ const verifyAccess = (req, res, next) => {
     res.status(401).json({ error: "Unauthorized" });
   }
 };
+
+app.use(cors());
 
 // Middleware
 app.use(express.json());
